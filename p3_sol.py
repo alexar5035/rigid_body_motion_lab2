@@ -12,7 +12,8 @@ def H_1():
 	Tz = p2_sol.trans_z(0.5)
 	Ty = p2_sol.trans_y(-1.5)
 	# calculate a total rotation via CURRENT FRAMES
-	R = np.matmul(Tx, Tz, Ty)
+	R = np.matmul(Tx, Tz)
+	R1 = np.matmul(R, Ty)
 
 # Transformation 2 (name it H_2):
 	# A translation of 0.5 units along the current z-axis,
@@ -24,7 +25,8 @@ def H_2():
 	Tx = p2_sol.trans_x(2.5)
 	Ty = p2_sol.trans_y(-1.5)
 	# calculate a total rotation via CURRENT FRAMES
-	R = np.matmul(Tz, Tx, Ty)
+	R = np.matmul(Tz, Tx)
+	R1 = np.matmul(R, Ty)
 	
 # Transformation 3 (name it H_3):
 	# A transformation with the same steps and order as in Transformation 1 but in the fixed frame
@@ -34,7 +36,8 @@ def H_3():
 	Tz = p2_sol.trans_z(0.5)
 	Ty = p2_sol.trans_y(-1.5)
 	# calculate a total rotation via FIXED FRAME
-	R = np.matmul(Ty, Tz, Tx)
+	R = np.matmul(Ty, Tz)
+	R1 = np.matmul(R, Tx)
 	
 # Transformation 4 (name it H_4):
 	# A transformation with the same steps and order as in Transformation 2 but in the fixed frame
@@ -44,7 +47,8 @@ def H_4():
 	Tx = p2_sol.trans_x(2.5)
 	Ty = p2_sol.trans_y(-1.5)
 	# calculate a total rotation via FIXED FRAME
-	R = np.matmul(Ty, Tx, Tz)
+	R = np.matmul(Ty, Tx)
+	R1 = np.matmul(R, Tz)
 	
 #Transformation 5 (name it H_5):
 	# A rotation by angle 𝜋/2 about the current x-axis
@@ -53,10 +57,12 @@ def H_4():
 	# followed by a rotation by angle  ―𝜋/2 about the current z-axis
 	
 def H_5():
-	Tx = p2_sol.trans_x(math.pi/2)
+	Rx = p2_sol.rot_x(math.pi/2)
 	Tx = p2_sol.trans_x(3)
 	Tz = p2_sol.trans_z(-3)
-	Tz = p2_sol.trans_z(-math.pi/2)
+	Rz = p2_sol.rot_z(-math.pi/2)
 	# calculate a total rotation via CURRENT FRAMES
-	R = np.matmul(Tx, Tz)
+	R = np.matmul(Rx, Tx)
+	R1 = np.matmul(R1, Tz)
+	R2 = np.matmul(R2, Rz)
 
